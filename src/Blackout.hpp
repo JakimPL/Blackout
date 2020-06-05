@@ -10,7 +10,6 @@
 
 #include "Random.hpp"
 
-typedef std::pair<unsigned long, unsigned long> Pair;
 typedef std::string String;
 typedef std::vector<String> Paragraph;
 typedef std::vector<Paragraph> Text;
@@ -32,15 +31,6 @@ private:
 		String newLine = DEFAULT_NEWLINE;
 		String blackSymbol = DEFAULT_BLACKSYMBOL;
 	} configuration;
-
-	struct Statistics {
-		void add(bool blackedOut = false);
-		Pair getStatistics();
-		void resetStatistics();
-	private:
-		unsigned long words;
-		unsigned long blackedOutWords;
-	} statistics;
 
 	Dictionary dictionary;
 	Text actualText;
@@ -69,13 +59,24 @@ public:
 	void loadDictionaryFromText(const Text &text);
 	void loadDictionaryFromText();
 
-	/* statistics */
-	Pair getStatistics();
-
 	/* text */
 	String getText(bool original = false);
 	bool loadText(const String &path);
 	bool saveText(const String &path);
+
+	struct Statistics {
+		void add(bool blackedOut = false);
+		void addParagraph();
+		void resetStatistics();
+	private:
+		unsigned long mParagraphs;
+		unsigned long mWords;
+		unsigned long mBlackedOutWords;
+	public:
+		const unsigned long &paragraphs = mParagraphs;
+		const unsigned long &words = mWords;
+		const unsigned long &blackedOutWords = mBlackedOutWords;
+	} statistics;
 };
 
 #endif

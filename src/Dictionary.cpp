@@ -20,7 +20,6 @@ void Blackout::loadDictionaryFromParagraph(const Paragraph &paragraph)
 	for (auto &word : paragraph) {
 		if (dictionary[word] == 0) {
 			dictionary[word] = pow(random.get(), 1 / configuration.probability - 1);
-			std::cout << word << ": " << dictionary[word] << DEFAULT_NEWLINE;
 		}
 	}
 }
@@ -34,7 +33,6 @@ void Blackout::loadDictionaryFromText(const Text &text)
 
 void Blackout::loadDictionaryFromText()
 {
-	std::cout << sourceText.size() << "\n";
 	for (auto &paragraph : sourceText) {
 		loadDictionaryFromParagraph(paragraph);
 	}

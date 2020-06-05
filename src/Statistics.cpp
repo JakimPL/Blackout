@@ -2,19 +2,19 @@
 
 void Blackout::Statistics::resetStatistics()
 {
-	blackedOutWords = words = 0;
-}
-
-Pair Blackout::Statistics::getStatistics()
-{
-	return std::make_pair(words, blackedOutWords);
+	mParagraphs = mBlackedOutWords = mWords = 0;
 }
 
 void Blackout::Statistics::add(bool blackedOut)
 {
-	words++;
+	mWords++;
 
 	if (blackedOut) {
-		blackedOutWords++;
+		mBlackedOutWords++;
 	}
+}
+
+void Blackout::Statistics::addParagraph()
+{
+	mParagraphs++;
 }

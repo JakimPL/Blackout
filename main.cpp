@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 
 	("help,h",                              "Shows the help message")
 	("version,v",                           "Shows the version of the program")
+	("show-input,s",                        "Shows the input file")
 	("dictionary,d",  bpo::value<String>(), "A path to the dictionary file")
 	("input,i",       bpo::value<String>(), "A path to the input file")
 	("output,o",      bpo::value<String>(), "A path to the output file")
@@ -50,6 +51,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
+	bool showInput = variablesMap.count("show-input");
 	std::string inputPath, outputPath, dictionaryPath;
 	Blackout blackout;
 
@@ -77,10 +79,16 @@ int main(int argc, char *argv[])
 		}
 
 		blackout.blackout();
-		Pair pair = blackout.getStatistics();
 
-		PRINT(blackout.getText(true) << DEFAULT_NEWLINE << blackout.getText());
-		PRINT("Blackout statistics: " << pair.second << " / " << pair.first << " (" << (double)(pair.second) / pair.first << "%)");
+		if (showInput) {
+			PRINT(blackout.getText(true));
+		}
+
+		PRINT(blackout.getText());
+		PRINT("Blackout statistics:" <<
+			  DEFAULT_NEWLINE << "Paragraphs: " << blackout.statistics.paragraphs <<
+			  DEFAULT_NEWLINE << "Words: " << blackout.statistics.blackedOutWords << " / " << blackout.statistics.words <<
+			  " (" << (double)(blackout.statistics.blackedOutWords) / blackout.statistics.words << "%)");
 
 		if (variablesMap.count("output")) {
 			outputPath = variablesMap["output"].as<String>();

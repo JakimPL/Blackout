@@ -30,12 +30,11 @@ void Blackout::blackout()
 
 			statistics.add(blackedOut);
 		}
-	}
-}
 
-Pair Blackout::getStatistics()
-{
-	return statistics.getStatistics();
+		if (!paragraph.empty() and !paragraph[0].empty()) {
+			statistics.addParagraph();
+		}
+	}
 }
 
 String Blackout::getText(bool original)
@@ -93,7 +92,6 @@ bool Blackout::importText(const String &path)
 
 		sourceText.push_back(paragraph);
 		actualText.push_back(paragraph);
-		statistics.add();
 	}
 
 	file.close();
